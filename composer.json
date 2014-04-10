@@ -1,0 +1,17 @@
+{
+    "name": "zicht/version",
+    "description": "Versioning logic following SemVer.org",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gerard van Helden",
+            "email": "gerard@zicht.nl"
+        }
+    ],
+    "autoload": {
+        "psr-0": {"Zicht\\" : "src/"}
+    },
+    "require": {
+
+    }
+}
