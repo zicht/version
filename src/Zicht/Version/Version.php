@@ -146,6 +146,7 @@ final class Version
      */
     private $parts = array();
 
+
     /**
      * Construct the version object based on the passed
      *
