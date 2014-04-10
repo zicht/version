@@ -51,6 +51,9 @@ class VersionTest extends \PHPUnit_Framework_TestCase
             array('1.0.0',              new Version(1)),
             array('1.0.0',              new Version(1, 0)),
             array('1.0.0',              new Version(1, 0, null, 'stable')),
+            array('1.0.0',              new Version(1, null, null, 'stable')),
+            array('1.0.0-dev',          new Version(1, null, null, 'dev')),
+            array('1.2.3-dev',          new Version(1, 2, 3, 'dev')),
             array('2.34.0',             new Version(2, 34)),
             array('5.67.89',            new Version(5, 67, 89)),
             array('5.67.89-alpha.1',    new Version(5, 67, 89, 'alpha')),
@@ -98,6 +101,7 @@ class VersionTest extends \PHPUnit_Framework_TestCase
     public function testCompare($a, $b, $expected)
     {
         $this->assertEquals($expected, Version::compare($a, $b));
+        $this->assertEquals(-$expected, Version::compare($b, $a));
     }
     public function comparisons()
     {
@@ -133,6 +137,9 @@ class VersionTest extends \PHPUnit_Framework_TestCase
             array($v(2, 1, 0, 'stable'),    $v(2, 1, 0, 'dev'),     1),
             array($v(2, 1, 0, 'alpha', 1),  $v(2, 1, 0, 'dev'),     1),
             array($v(2, 1, 0, 'alpha', 1),  $v(2, 1, 0, 'alpha'),   0),
+            array($v(2, 1, 0),              $v(2, 1, 0),            0),
+            array($v(2, 1, 0),              $v(2, 1),               0),
+            array($v(2, 1, 0),              $v(2, 1),               0),
        );
     }
 }
