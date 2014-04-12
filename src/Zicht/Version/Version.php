@@ -183,7 +183,15 @@ final class Version
             if ($currentPart === $part) {
                 switch ($part) {
                     case self::STABILITY:
-                        $this->set($currentPart, self::$stabilities[array_search($this->get($currentPart), self::$stabilities) +1]);
+                        $this->set(
+                            $currentPart, 
+                            self::$stabilities[
+                                array_search(
+                                    $this->get($currentPart), 
+                                    self::$stabilities
+                                ) +1
+                            ]
+                        );
                         break;
                     default:
                         $this->set($currentPart, $this->get($currentPart) +1);
