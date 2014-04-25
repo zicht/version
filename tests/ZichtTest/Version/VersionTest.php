@@ -8,6 +8,9 @@ namespace ZichtTest\Version\VersionTest;
 
 use Zicht\Version\Version;
 
+/**
+ * @covers Zicht\Version\Version
+ */
 class VersionTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -71,8 +74,6 @@ class VersionTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals($expect, $in->increment($part));
     }
-
-
     public function versionIncrements()
     {
         $v = function() {
@@ -141,5 +142,36 @@ class VersionTest extends \PHPUnit_Framework_TestCase
             array($v(2, 1, 0),              $v(2, 1),               0),
             array($v(2, 1, 0),              $v(2, 1),               0),
        );
+    }
+
+
+    /**
+     * @dataProvider strVersions3
+     * @param $versionStr
+     * @param $isConform
+     * @return mixed
+     */
+    public function testIsConform($versionStr, $isConform)
+    {
+        return $this->assertEquals($isConform, Version::isConform($versionStr));
+    }
+    public function strVersions3()
+    {
+        return array(
+            array('1', false),
+            array('1.0', false),
+            array('1.0-stable', false),
+            array('2.34', false),
+            array('5.67.89-alpha', false),
+            array('5.67.89-dev', true),
+            array('5.67.89-beta.2', true),
+            array('5.67.89-beta.2', true),
+            array('5.67.89-dev.1', false),
+            array('5.67.89-stable', false),
+            array('5.67.89', true),
+            array('5.67.89-stable.1', false),
+            array('5.67-rc.1', false),
+            array('5.67.0-rc.1', true),
+        );
     }
 }

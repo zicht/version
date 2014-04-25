@@ -139,6 +139,18 @@ final class Version
         return 0;
     }
 
+
+    /**
+     * Checks whether a version conforms the formatting as specified by this class.
+     *
+     * @param string $version
+     * @return bool
+     */
+    public static function isConform($version)
+    {
+        return (string) self::fromString($version) === (string) $version;
+    }
+
     /**
      * Contains the part values.
      *
@@ -276,6 +288,7 @@ final class Version
                 break;
             }
         }
+
         return $ret;
     }
 }
