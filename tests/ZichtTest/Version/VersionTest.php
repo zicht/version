@@ -174,4 +174,15 @@ class VersionTest extends \PHPUnit_Framework_TestCase
             array('5.67.0-rc.1', true),
         );
     }
+
+
+    public function testGetStability()
+    {
+        $this->assertEquals(Version::fromString('1')->getStability(), 'stable');
+    }
+
+    public function testNumeric()
+    {
+        $this->assertEquals(array(1, 2, 3, 2, 4), Version::fromString('1.2.3-beta.4')->numeric());
+    }
 }

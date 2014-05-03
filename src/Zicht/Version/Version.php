@@ -121,14 +121,12 @@ final class Version
      */
     public static function compare(Version $a, Version $b)
     {
-        foreach (self::$ordinality as $key) {
-            $aVal = $a->get($key);
-            $bVal = $b->get($key);
+        $aValues = $a->numeric();
+        $bValues = $b->numeric();
 
-            if ($key === self::STABILITY) {
-                $aVal = array_search($aVal, self::$stabilities);
-                $bVal = array_search($bVal, self::$stabilities);
-            }
+        foreach (array_keys(self::$ordinality) as $key) {
+            $aVal = $aValues[$key];
+            $bVal = $bValues[$key];
 
             if ($aVal < $bVal) {
                 return -1;
@@ -148,7 +146,7 @@ final class Version
      */
     public static function isConform($version)
     {
-        return (string) self::fromString($version) === (string) $version;
+        return (string)self::fromString($version) === (string)$version;
     }
 
     /**
@@ -289,6 +287,36 @@ final class Version
             }
         }
 
+        return $ret;
+    }
+
+
+    /**
+     * Returns the stability of this version
+     *
+     * @return mixed
+     */
+    public function getStability()
+    {
+        return $this->get(self::STABILITY);
+    }
+
+
+    /**
+     * Returns a numeric representation of all version parts, used for comparison
+     *
+     * @return array
+     */
+    public function numeric()
+    {
+        $ret = array();
+        foreach (self::$ordinality as $part) {
+            if ($part === self::STABILITY) {
+                $ret[]= array_search($this->get($part), self::$stabilities);
+            } else {
+                $ret[]= $this->get($part);
+            }
+        }
         return $ret;
     }
 }
